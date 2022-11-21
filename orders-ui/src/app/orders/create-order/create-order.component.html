@@ -1,0 +1,34 @@
+<div >
+    <h2>Create Order</h2>
+    <form [formGroup]="orderForm" (ngSubmit)="onSubmit()">
+      <table>
+        <tr>
+          <td>Order Type</td>
+          <td>
+            <select formControlName="orderType">
+              <option [ngValue]="null" disabled>choose order type</option>
+              <option *ngFor="let orderType of allOrderTypes" [ngValue]="orderType">
+                {{ orderType }}
+              </option>
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <td>Due Date</td>
+          <td>
+            <input type="text" class="form-control" formControlName="dueDate" id="dueDate" placeholder="yyyy/mm/dd">
+          </td>
+        </tr>          
+        <tr>
+          <td>Customer Name</td>
+          <td>
+            <input type="text" class="form-control" formControlName="customerName" id="customerName" placeholder="Customer Name">
+          </td>
+        </tr>
+      </table>
+      <button type="submit" [disabled]="!orderForm.valid">Create</button>
+    </form>
+    <div *ngIf="message" [ngClass]="messageType">
+      <p>{{message}}</p>
+    </div>
+</div>

@@ -1,0 +1,35 @@
+# for kompose convert: not support "network": 
+# 	https://github.com/kubernetes/kompose/blob/master/docs/conversion.md
+# this Kafka Docker setting is to support a client myservice1 in Docker container, 
+# also to support myservice1 running locally (on Docker-host machine: localhost)
+version: "3.0"
+    
+services:
+  mysql1:
+    image: mysql:8.0.20
+    container_name: mysql1
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: "Lead-138"
+      MYSQL_USER: user1
+      MYSQL_PASSWORD: "Lead-138"
+      MYSQL_DATABASE: "MyDB"
+      
+  orders:
+    container_name: orders
+    build:
+      context: ./
+      dockerfile: ./Dockerfile
+    image: zmg9046/orders:tag-1.0.0
+    ports:
+      - "8080:8080"
+    environment:
+      mysql-servername: mysql1
+      mysql-db: "MyDB"
+      spring_datasource_username: "user1"
+      spring_datasource_password: "Lead-138"
+      spring_datasource_url: jdbc:mysql://mysql1:3306/MyDB?useSSL=false&allowPublicKeyRetrieval=true
+    depends_on:
+      - mysql1
+    entrypoint: bash ./wait-for-it.sh mysql1:3306 -t 180 -- java -jar orders.jar

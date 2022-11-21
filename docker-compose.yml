@@ -1,0 +1,42 @@
+version: "3.0"
+    
+services:
+  mysql1:
+    image: mysql:8.0.20
+    container_name: mysql1
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: "Lead-138"
+      MYSQL_USER: user1
+      MYSQL_PASSWORD: "Lead-138"
+      MYSQL_DATABASE: "MyDB"
+      
+  orders:
+    container_name: orders
+    build:
+      context: ./orders/
+      dockerfile: ./Dockerfile
+    image: zmg9046/orders:tag-1.0.0
+    ports:
+      - "8080:8080"
+    environment:
+      mysql-servername: mysql1
+      mysql-db: "MyDB"
+      spring_datasource_username: "user1"
+      spring_datasource_password: "Lead-138"
+      spring_datasource_url: jdbc:mysql://mysql1:3306/MyDB?useSSL=false&allowPublicKeyRetrieval=true
+    depends_on:
+      - mysql1
+    entrypoint: bash ./wait-for-it.sh mysql1:3306 -t 120 -- java -jar orders.jar
+
+  orders-ui:
+    container_name: orders-ui
+    build:
+      context: ./orders-ui/
+      dockerfile: ./Dockerfile    
+    image: zmg9046/orders-ui:tag-1.0.0
+    ports:
+      - "4200:80"
+    depends_on:
+      - orders

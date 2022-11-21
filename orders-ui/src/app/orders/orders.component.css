@@ -1,0 +1,23 @@
+table.list{
+    border: 1px solid #96D4D4;  
+    padding: 0 8px;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.list{
+    border: 1px solid #96D4D4;  
+    padding: 0 8px;
+    border-collapse: collapse;
+}
+
+.toolButtons{
+    display: inline;
+    float: right;
+}
+
+.Error{color: red;}
+
+.Warning{color: blue;}
+
+.Ignored{color: green;}

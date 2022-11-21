@@ -1,0 +1,50 @@
+<div class="page">
+    <div>
+      <B>Orders</B>
+
+      <form [formGroup]="filterForm" (ngSubmit)="onFilterSearch()"  class="toolButtons">
+        <table class="toolButtons">
+          <tr>
+            <td>Order Type:</td>
+            <td>
+              <select formControlName="orderType">
+                <option [ngValue]="null" enabled>--</option>
+                <option *ngFor="let orderType of allOrderTypes" [ngValue]="orderType">
+                  {{ orderType }}
+                </option>
+              </select>
+            </td>
+            <td> Due Date:</td>
+            <td><input type="text" class="form-control" formControlName="dueDate" id="dueDate" placeholder="yyyy/mm/dd"></td>
+            <td><button type="submit">search</button></td>
+          </tr>
+        </table>
+      </form>
+      
+    </div>  
+    <div class="orderTabs">
+      <table class="list">
+        <thead>
+          <tr class="list">
+            <th class="list">Order Number</th>
+            <th class="list">Order Type</th>
+            <th class="list">Due Date</th>
+            <th class="list">Customer Name</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="list" *ngFor="let order of orders; let i = index">
+            <td class="list">{{order.orderNumber}}</td>
+            <td class="list">{{order.orderType.toLowerCase()}}</td>
+            <td class="list">{{dateRepoToUi(order.dueDate)}}</td>
+            <td class="list">{{order.customerName}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    
+    <div *ngIf="message" [ngClass]="messageType">
+      <p>{{message}}</p>
+    </div>    
+</div>
+  
