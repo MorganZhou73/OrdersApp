@@ -45,4 +45,4 @@
   
 3) run the unit test to load data.json into database
 	$ cd OrdersApp/orders
-	$ mvn -Dtest=OrderRepositoryTest#loadJsonToDB test
+	$ mvn -Dtest=OrderRepositoryIntegrationTest#loadJsonToDB test
