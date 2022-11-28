@@ -26,3 +26,23 @@
 
 4) to shut down all the services on Docker	   
 	$ docker-compose -f ./docker-compose.yml down
+
+## Load Test Data file after deployment 
+ - after deploy to docker, we can also run the test directly to load the \orders\src\test\data\data.json into database:
+
+1) stop the container orders;
+	$ docker stop orders
+	$ docker ps -a
+	
+2) from MySQL Workbench:
+	USE MyDB;
+	SHOW TABLES;
+	SELECT * FROM items;
+	DELETE FROM items WHERE order_number>=0; 
+	
+	-- DROP TABLE items;
+	-- SHOW CREATE TABLE items;
+  
+3) run the unit test to load data.json into database
+	$ cd OrdersApp/orders
+	$ mvn -Dtest=OrderRepositoryTest#loadJsonToDB test

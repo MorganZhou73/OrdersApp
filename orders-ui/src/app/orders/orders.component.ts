@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Subject, takeUntil } from 'rxjs';
+import { Subject } from 'rxjs';
 import { Order } from '../model/order';
 import { OrdersService } from '../services/orders.service';
 import { AppConstants } from '../shared/constants/app.constants';
@@ -59,22 +59,22 @@ export class OrdersComponent implements OnInit {
   getOrders(orderType: string, dueDate: string) {
     this.message = '';
 
-    this.ordersService.getOrders(orderType, dueDate).subscribe(
-      (response: any) => {
-      if(!response){
-        return;
-      }
+    this.ordersService.getOrders(orderType, dueDate).subscribe({
+      next: ((response: any) => {
+        if(!response){
+          return;
+        }
 
-      this.orders = response;
-      },
-      (error: any) => {
+        this.orders = response;
+      }),
+      error: ((error: any) => {
         this.orders = [];
         
         this.message = 'There is some error, please check and try again. ';
         this.messageType = 'Error';
         console.error(error);
-      }
-    );
+      })
+    });
   }
 
   dateRepoToUi(date:string){
@@ -82,6 +82,6 @@ export class OrdersComponent implements OnInit {
   }
 
   dateUiToRepo(date:string){
-    return date.length > 0 ? date.replace(/\//g, '-') : '';
+    return date?.length > 0 ? date.replace(/\//g, '-') : '';
   }
 }

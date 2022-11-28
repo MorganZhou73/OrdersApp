@@ -40,6 +40,10 @@
     margin: 0 16px;
   }
 
+  .header {
+    align-items: left;
+  }
+
   .content {
     display: flex;
     margin: 82px auto 32px;

@@ -18,7 +18,9 @@ import java.nio.file.Paths;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
-class OrderRepositoryTest {
+class OrderRepositoryIntegrationTest {
+    // Integration Test to load Json file into DB when table items is empty
+
     @Autowired
     OrderRepository orderRepository;
 
@@ -47,7 +49,8 @@ class OrderRepositoryTest {
                 orderEntity.setDueDate(utils.parseDate(item.getString("due-date")));
                 orderEntity.setCustomerName(item.getString("customer-name"));
 
-                orderRepository.save(orderEntity);
+                OrderEntity saved = orderRepository.save(orderEntity);
+                System.out.println("OrderNumber : " + orderEntity.getOrderNumber() + " - saved: " + saved.getOrderNumber());
             }
 
             count = orderRepository.count();
