@@ -6,7 +6,8 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+	"script1": "ng serve --proxy-config proxy.conf2.json"
   },
   "private": true,
   "dependencies": {
