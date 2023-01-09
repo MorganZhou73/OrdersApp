@@ -48,6 +48,6 @@ public class OrderController {
             throw new OrderServiceException(ErrorMessages.MISSING_REQUIRED_FIELD.getErrorMessage());
 
         OrderEntity order = orderService.createOrder(orderDetails);
-        return new ResponseEntity(order, HttpStatus.OK);
+        return new ResponseEntity(order, HttpStatus.CREATED);
     }
 }

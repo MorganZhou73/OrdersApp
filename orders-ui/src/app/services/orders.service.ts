@@ -17,11 +17,11 @@ export class OrdersService {
   getOrders(orderType: string, dueDate: string): Observable<any>{
     let queryParams = new HttpParams();
     
-    if(orderType !== null && orderType.length !== 0) {
+    if(orderType?.length !== 0) {
       queryParams = queryParams.set('type', orderType);
     }
 
-    if(dueDate !== null && dueDate.length !== 0) {
+    if(dueDate?.length !== 0) {
       queryParams = queryParams.set('duedate', dueDate);
     }
 
